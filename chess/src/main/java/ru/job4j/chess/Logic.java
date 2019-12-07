@@ -23,12 +23,31 @@ public class Logic {
 
     public boolean move(Cell source, Cell dest) {
         boolean rst = false;
-        int index = this.findBy(source);
-        if (index != -1) {
-            Cell[] steps = this.figures[index].way(source, dest);
-            if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+        try {
+            int index = this.findBy(source);
+            if (index != -1) {
+                Cell[] steps = this.figures[index].way(source, dest);
+                if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
+                    if (!occupied(steps)){
+                        rst = true;
+                        this.figures[index] = this.figures[index].copy(dest);
+                    }
+                }
+            }
+        } catch (IllegalStateException ilse) {
+            String.format("Could not way by diagonal from %s to %s", source, dest);
+        }
+
+        return rst;
+    }
+
+    public boolean occupied(Cell[] steps) {
+        boolean rst = false;
+        for (Cell cell : steps) {
+            int index = findBy(cell);
+            if (index != -1) {
                 rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+                break;
             }
         }
         return rst;
