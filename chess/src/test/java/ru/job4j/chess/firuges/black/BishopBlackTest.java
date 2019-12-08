@@ -33,4 +33,11 @@ public class BishopBlackTest {
         Cell[] expectedDelta = {Cell.D2, Cell.E3, Cell.F4, Cell.G5};
         assertArrayEquals(expectedDelta, delta);
     }
+
+    @Test
+    public void diagonalTrue() {
+        BishopBlack BishopBlack = new BishopBlack(Cell.C1);
+        boolean result = BishopBlack.isDiagonal(Cell.C1, Cell.F4);
+        assertTrue(result);
+    }
 }
